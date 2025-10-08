@@ -1,0 +1,23 @@
+# Go
+/build
+/bin
+/dist
+*.exe
+*.test
+*.out
+
+# Modules cache (kept outside image anyway)
+vendor/
+
+# VCS & editor
+.git
+.gitignore
+.idea
+.vscode
+
+# Env & local
+.env
+.env.*
+Dockerfile
+docker-compose.yml
+Makefile

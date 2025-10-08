@@ -1,0 +1,13 @@
+services:
+  discord-bot:
+    build: .
+    image: discord-presence-bot:latest
+    restart: unless-stopped
+    env_file:
+      - .env
+    # Optional: limit resources a bit
+    deploy:
+      resources:
+        limits:
+          cpus: '0.50'
+          memory: 256M
