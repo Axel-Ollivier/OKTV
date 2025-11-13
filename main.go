@@ -7,20 +7,31 @@ import (
 	"time"
 
 	"github.com/bwmarrin/discordgo"
+	"github.com/joho/godotenv"
 )
 
 var (
-	token     = os.Getenv("DISCORD_TOKEN")
-	guildID   = os.Getenv("GUILD_ID")
-	channelID = os.Getenv("CHANNEL_ID")
+	token     string
+	guildID   string
+	channelID string
 
-	mu       sync.RWMutex
-	statuses = map[string]string{}
-	updateCh = make(chan struct{}, 1)
+	mu        sync.RWMutex
+	statuses  = map[string]string{}
+	updateCh  = make(chan struct{}, 1)
 	messageID string
 )
 
 func main() {
+	_ = godotenv.Load() // charge .env si présent (ignore l'erreur si absent)
+
+	// Récupération des variables d'environnement après le chargement du .env
+	token = os.Getenv("DISCORD_TOKEN")
+	guildID = os.Getenv("GUILD_ID")
+	channelID = os.Getenv("CHANNEL_ID")
+	if mid := os.Getenv("MESSAGE_ID"); mid != "" {
+		messageID = mid
+	}
+
 	if token == "" || guildID == "" || channelID == "" {
 		panic("DISCORD_TOKEN, GUILD_ID et CHANNEL_ID requis")
 	}
